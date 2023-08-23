@@ -1,4 +1,6 @@
-# state file tested using paraview version 5.11.1
+# Demonstration script for paraview version 5.11
+# written by Jean M. Favre, Swiss National Supercomputing Centre
+#
 import paraview
 paraview.compatibility.major = 5
 paraview.compatibility.minor = 11
@@ -23,10 +25,10 @@ renderView1.CameraParallelScale = 105.65628234989153
 renderView1.BackEnd = 'OSPRay raycaster'
 renderView1.OSPRayMaterialLibrary = materialLibrary1
 
-toothmhd = MetaFileSeriesReader(registrationName='tooth.mhd', FileNames=['./tooth.mhd'])
+reader = MetaFileSeriesReader(registrationName='tooth.mhd', FileNames=['./tooth.mhd'])
 
 # create a new 'Slice'
-slice1 = Slice(registrationName='Slice1', Input=toothmhd)
+slice1 = Slice(registrationName='Slice1', Input=reader)
 slice1.SliceType = 'Plane'
 slice1.HyperTreeGridSlicer = 'Plane'
 N=50 #(distance from mid-plane in Y direction)
@@ -37,21 +39,21 @@ slice1.SliceOffsetValues = [(i-N) for i in range(2*N+1)]
 slice1.SliceType.Origin = [51.0, 46.5, 80.0]
 slice1.SliceType.Normal = [0.0, 1.0, 0.0]
 
-# show data from toothmhd
-toothmhdDisplay = Show(toothmhd, renderView1, 'UniformGridRepresentation')
+# show data from reader
+readerDisplay = Show(reader, renderView1, 'UniformGridRepresentation')
 
 # trace defaults for the display properties.
-toothmhdDisplay.Representation = 'Outline'
+readerDisplay.Representation = 'Outline'
 
 
 # init the 'PiecewiseFunction' selected for 'ScaleTransferFunction'
-toothmhdDisplay.ScaleTransferFunction.Points = [0.0, 0.0, 0.5, 0.0, 1300.0, 1.0, 0.5, 0.0]
+readerDisplay.ScaleTransferFunction.Points = [0.0, 0.0, 0.5, 0.0, 1300.0, 1.0, 0.5, 0.0]
 
 # init the 'PiecewiseFunction' selected for 'OpacityTransferFunction'
-toothmhdDisplay.OpacityTransferFunction.Points = [0.0, 0.0, 0.5, 0.0, 1300.0, 1.0, 0.5, 0.0]
+readerDisplay.OpacityTransferFunction.Points = [0.0, 0.0, 0.5, 0.0, 1300.0, 1.0, 0.5, 0.0]
 
 # init the 'Plane' selected for 'SliceFunction'
-toothmhdDisplay.SliceFunction.Origin = [51.0, 46.5, 80.0]
+readerDisplay.SliceFunction.Origin = [51.0, 46.5, 80.0]
 
 # show data from slice1
 slice1Display = Show(slice1, renderView1, 'GeometryRepresentation')

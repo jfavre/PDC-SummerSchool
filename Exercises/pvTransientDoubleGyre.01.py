@@ -4,7 +4,7 @@
 # see https://shaddenlab.berkeley.edu/uploads/LCS-tutorial/examples.html
 # for reference to the data generation of the vector field
 
-# demonstrates the use of streamlines, evely-spaced streamlines, and glyphs
+# demonstrates the use of streamlines, evenly-spaced streamlines, and glyphs
 # representations
 
 import paraview

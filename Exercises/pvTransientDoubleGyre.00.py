@@ -3,6 +3,8 @@
 # tested Mon Aug 14 12:52:39 PM CEST 2023
 # see https://shaddenlab.berkeley.edu/uploads/LCS-tutorial/examples.html
 # for reference to the data generation of the vector field
+#
+# a simple data generator for a 2D transient vector field
 
 #### import the simple module from the paraview
 from paraview.simple import *

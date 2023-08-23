@@ -1,5 +1,7 @@
-#state file tested using paraview version 5.11.1
+# Demonstration script for paraview version 5.11
+# written by Jean M. Favre, Swiss National Supercomputing Centre
 # tested Fri 18 Aug 16:07:30 CEST 2023
+#
 from paraview.simple import *
 
 sphere1 = Sphere()

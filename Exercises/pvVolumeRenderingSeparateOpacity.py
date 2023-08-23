@@ -1,4 +1,7 @@
-# state file tested using paraview version 5.11.1
+# Demonstration script for paraview version 5.11
+# written by Jean M. Favre, Swiss National Supercomputing Centre
+#
+# Tested Wed 23 Aug 08:37:00 CEST 2023
 
 #### import the simple module from the paraview
 from paraview.simple import *
@@ -17,17 +20,17 @@ renderView1.CameraFocalDisk = 1.0
 renderView1.CameraParallelScale = 105.65628234989153
 
 # create a new 'Meta File Series Reader'
-toothmhd = MetaFileSeriesReader(registrationName='tooth.mhd', FileNames=['tooth.mhd'])
-toothmhd.UpdatePipeline()
+reader = MetaFileSeriesReader(registrationName='tooth.mhd', FileNames=['tooth.mhd'])
+reader.UpdatePipeline()
 
-# show data from toothmhd
-toothmhdDisplay = Show(toothmhd, renderView1, 'UniformGridRepresentation')
-toothmhdDisplay.Representation = 'Outline'
-toothmhdDisplay.ColorArrayName = ['POINTS', 'MetaImage']
-toothmhdDisplay.OSPRayScaleArray = 'MetaImage'
+# show data from reader
+readerDisplay = Show(reader, renderView1, 'UniformGridRepresentation')
+readerDisplay.Representation = 'Outline'
+readerDisplay.ColorArrayName = ['POINTS', 'MetaImage']
+readerDisplay.OSPRayScaleArray = 'MetaImage'
 
 # create a new 'Gradient'
-gradient1 = PythonCalculator(registrationName='Gradient', Input=toothmhd)
+gradient1 = PythonCalculator(registrationName='Gradient', Input=reader)
 gradient1.Expression = 'algs.gradient(MetaImage)'
 gradient1.ArrayName = 'densityGradient'
 

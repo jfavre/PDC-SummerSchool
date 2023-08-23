@@ -1,4 +1,8 @@
-# state file tested using paraview version 5.1.1
+# Demonstration script for paraview version 5.11
+# written by Jean M. Favre, Swiss National Supercomputing Centre
+#
+# Tested Wed 23 Aug 08:37:00 CEST 2023
+# You must run a client-server ParaView with a server running 4 MPI tasks
 
 #### import the simple module from the paraview
 from paraview.simple import *

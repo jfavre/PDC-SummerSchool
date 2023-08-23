@@ -1,4 +1,5 @@
-# Demonstration script for paraview version 5.9
+# Demonstration script for paraview version 5.11
+# written by Jean M. Favre, Swiss National Supercomputing Centre
 #
 # Creates a spherical grid with a Python ProgrammableSource.
 # Works also in parallel by splitting the extents

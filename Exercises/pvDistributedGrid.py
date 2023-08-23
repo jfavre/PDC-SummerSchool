@@ -1,6 +1,8 @@
-# state file generated using paraview version 5.11
-# Tested Thu Oct 27 11:00:59 AM CEST 2022 in parallel with 4 pvservers
-# You must run a client-server ParaView with a server running at least 4 MPI tasks
+# Demonstration script for paraview version 5.11
+# written by Jean M. Favre, Swiss National Supercomputing Centre
+# Tested Wed 23 Aug 08:37:00 CEST 2023
+# You must run a client-server ParaView with a server running 4 MPI tasks
+#
 #### import the simple module from the paraview
 from paraview.simple import *
 paraview.simple._DisableFirstRenderCameraReset()
@@ -68,64 +70,43 @@ for k in range(zaxis.size):
 output.PointData.append(x, 'x')
 """
 
-# create a new 'Programmable Source'
-programmableSource1 = ProgrammableSource(registrationName='BLOCK_Distribution')
-programmableSource1.OutputDataSetType = 'vtkRectilinearGrid'
-programmableSource1.Script = SS
+BlockMode  = "vtk.vtkExtentTranslator.BLOCK_MODE)"
+X_SLABMode = "vtk.vtkExtentTranslator.X_SLAB_MODE)"
+Y_SLABMode = "vtk.vtkExtentTranslator.Y_SLAB_MODE)"
+Z_SLABMode = "vtk.vtkExtentTranslator.Z_SLAB_MODE)"
 
-programmableSource1.ScriptRequestInformation = """
-dims = [40, 30, 20]
+SRI="""dims = [40, 30, 20]
 executive = self.GetExecutive()
 outInfo = executive.GetOutputInformation(0)
 outInfo.Set(executive.WHOLE_EXTENT(), 0, dims[0]-1, 0, dims[1]-1, 0, dims[2]-1)
 outInfo.Set(vtk.vtkAlgorithm.CAN_PRODUCE_SUB_EXTENT(), 1)
 # optionally set the splitting mode. default is 3 (BLOCK_MODE), otherwise [XYZ]_SLAB_MODE = 0, 1, 2
-outInfo.Set(vtk.vtkExtentTranslator.UPDATE_SPLIT_MODE(), vtk.vtkExtentTranslator.BLOCK_MODE)
+outInfo.Set(vtk.vtkExtentTranslator.UPDATE_SPLIT_MODE(), 
 """
+
+# create a new 'Programmable Source'
+programmableSource1 = ProgrammableSource(registrationName='BLOCK_Distribution')
+programmableSource1.OutputDataSetType = 'vtkRectilinearGrid'
+programmableSource1.Script = SS
+programmableSource1.ScriptRequestInformation = f"""{SRI}{BlockMode}"""
 
 # create a new 'Programmable Source'
 programmableSource2 = ProgrammableSource(registrationName='X_SLAB_Distribution')
 programmableSource2.OutputDataSetType = 'vtkRectilinearGrid'
 programmableSource2.Script = SS
-
-programmableSource2.ScriptRequestInformation = """
-dims = [40, 30, 20]
-executive = self.GetExecutive()
-outInfo = executive.GetOutputInformation(0)
-outInfo.Set(executive.WHOLE_EXTENT(), 0, dims[0]-1, 0, dims[1]-1, 0, dims[2]-1)
-outInfo.Set(vtk.vtkAlgorithm.CAN_PRODUCE_SUB_EXTENT(), 1)
-# optionally set the splitting mode. default is 3 (BLOCK_MODE), otherwise [XYZ]_SLAB_MODE = 0, 1, 2
-outInfo.Set(vtk.vtkExtentTranslator.UPDATE_SPLIT_MODE(), vtk.vtkExtentTranslator.X_SLAB_MODE)
-"""
+programmableSource2.ScriptRequestInformation = f"""{SRI}{X_SLABMode}"""
 
 # create a new 'Programmable Source'
 programmableSource3 = ProgrammableSource(registrationName='Y_SLAB_Distribution')
 programmableSource3.OutputDataSetType = 'vtkRectilinearGrid'
 programmableSource3.Script = SS
-
-programmableSource3.ScriptRequestInformation = """
-dims = [40, 30, 20]
-executive = self.GetExecutive()
-outInfo = executive.GetOutputInformation(0)
-outInfo.Set(executive.WHOLE_EXTENT(), 0, dims[0]-1, 0, dims[1]-1, 0, dims[2]-1)
-outInfo.Set(vtk.vtkAlgorithm.CAN_PRODUCE_SUB_EXTENT(), 1)
-# optionally set the splitting mode. default is 3 (BLOCK_MODE), otherwise [XYZ]_SLAB_MODE = 0, 1, 2
-outInfo.Set(vtk.vtkExtentTranslator.UPDATE_SPLIT_MODE(), vtk.vtkExtentTranslator.Y_SLAB_MODE)
-"""
+programmableSource3.ScriptRequestInformation = f"""{SRI}{Y_SLABMode}"""
 
 # create a new 'Programmable Source'
 programmableSource4 = ProgrammableSource(registrationName='Z_SLAB_Distribution')
 programmableSource4.OutputDataSetType = 'vtkRectilinearGrid'
 programmableSource4.Script = SS
-programmableSource4.ScriptRequestInformation = """
-dims = [40, 30, 20]
-executive = self.GetExecutive()
-outInfo = executive.GetOutputInformation(0)
-outInfo.Set(executive.WHOLE_EXTENT(), 0, dims[0]-1, 0, dims[1]-1, 0, dims[2]-1)
-outInfo.Set(vtk.vtkAlgorithm.CAN_PRODUCE_SUB_EXTENT(), 1)
-# optionally set the splitting mode. default is 3 (BLOCK_MODE), otherwise [XYZ]_SLAB_MODE = 0, 1, 2
-outInfo.Set(vtk.vtkExtentTranslator.UPDATE_SPLIT_MODE(), vtk.vtkExtentTranslator.Z_SLAB_MODE)
-"""
+programmableSource4.ScriptRequestInformation = f"""{SRI}{Z_SLABMode}"""
 
 programmableSource1Display = Show(programmableSource1, renderView1, 'UniformGridRepresentation')
 
@@ -173,7 +154,6 @@ text4 = Text(registrationName='Z_SLAB_label')
 text4.Text = 'Default Z_SLAB_MODE'
 text4Display = Show(text4, renderView4, 'TextSourceRepresentation')
 text4Display.WindowLocation = 'Lower Center'
-
 
 vtkProcessIdLUTColorBar = GetScalarBar(vtkProcessIdLUT, renderView1)
 vtkProcessIdLUTColorBar.Orientation = 'Horizontal'

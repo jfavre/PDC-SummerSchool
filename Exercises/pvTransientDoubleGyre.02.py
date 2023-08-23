@@ -188,10 +188,10 @@ scene = GetAnimationScene()
 scene.UpdateAnimationUsingDataTimeSteps()
 SetActiveSource(vectorField2D)
 
-
 # for the exercise
 #Show the source data as an outline Bounding box
 # Show the temporal particles-to-pathlines
+"""
 vectorField2DDisplay.Representation = 'Outline'
 Hide(particleTracer1)
 Pathlines = Show(temporalParticlesToPathlines1)
@@ -199,4 +199,4 @@ Particles= Show(OutputPort(temporalParticlesToPathlines1, 1))
 Particles.PointSize = 5.0
 Particles.RenderPointsAsSpheres = 1
 SaveAnimation("foo.png", ImageResolution=ImageResolution)
-
+"""

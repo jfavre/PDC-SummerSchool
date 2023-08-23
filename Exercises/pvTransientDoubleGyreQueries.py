@@ -3,7 +3,9 @@
 # tested Mon Aug 14 12:52:39 PM CEST 2023
 # see https://shaddenlab.berkeley.edu/uploads/LCS-tutorial/examples.html
 # for reference to the data generation of the vector field
-
+#
+# a simple data generator for a 2D transient vector field
+# a couple of examples of queries are given to demonstrate the use of temporal queries
 import paraview
 paraview.compatibility.major = 5
 paraview.compatibility.minor = 11
@@ -83,8 +85,8 @@ SetActiveView(renderView1)
 Show()
 ResetCamera()
 
-#QuerySelect(QueryString='(id == 15000)', FieldType='POINT', InsideOut=0)
-QuerySelect(QueryString='(mag(velocity) == max(mag(velocity)))', FieldType='POINT', InsideOut=0)
+QuerySelect(QueryString='(id == 22222)', FieldType='POINT', InsideOut=0)
+#QuerySelect(QueryString='(mag(velocity) == max(mag(velocity)))', FieldType='POINT', InsideOut=0)
 
 extractSelection1 = ExtractSelection(registrationName='ExtractSelection1', Input=programmableSource1)
 extractSelection1.UpdatePipelineInformation()

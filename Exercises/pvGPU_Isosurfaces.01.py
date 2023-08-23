@@ -1,4 +1,6 @@
-# state file generated using paraview version 5.11.1
+# Demonstration script for paraview version 5.11
+# written by Jean M. Favre, Swiss National Supercomputing Centre
+#
 import paraview
 paraview.compatibility.major = 5
 paraview.compatibility.minor = 11

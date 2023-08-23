@@ -1,4 +1,5 @@
-# state file tested using paraview version 5.11.1
+# Demonstration script for paraview version 5.11
+# written by Jean M. Favre, Swiss National Supercomputing Centre
 #
 # Left view holds an isocontour where Normals were not computed. Thus,
 # no ghost-cells were needed.
@@ -10,7 +11,8 @@
 # and it can be viewed on the screen. Go to the right view, hide the "Contour"
 # object and make the "GhostCells" object visible
 #
-# Tested Mon 24 Jul 15:30:13 CEST 2023 with 4 pvservers
+# Tested Wed 23 Aug 08:37:00 CEST 2023
+# You must run a client-server ParaView with a server running 4 MPI tasks
 
 #### import the simple module from the paraview
 from paraview.simple import *

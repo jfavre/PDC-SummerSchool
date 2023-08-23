@@ -1,4 +1,5 @@
-# tested with ParaView v5.11
+# Demonstration script for paraview version 5.11
+# written by Jean M. Favre, Swiss National Supercomputing Centre
 # at first, we create an isocontour where Normals are not computed. Thus,
 # no ghost-cells are needed.
 # Then, we request Normals, and we demonstrate that the reader re-executes completely
@@ -6,7 +7,8 @@
 # mpiexec -n 4 pvbatch pvMakeGhostCellsLog.py | grep "Execute Wavelet1 id"
 # mpiexec -n 4 pvbatch pvMakeGhostCellsLog.py --ghostcells | grep "Execute Wavelet1 id"
 #
-# Tested Mon 24 Jul 15:30:13 CEST 2023 with 4 pvservers
+# Tested Wed 23 Aug 08:37:00 CEST 2023
+# You must run pvbatch with 4 MPI tasks
 
 #### import the simple module from the paraview
 from paraview.simple import *
